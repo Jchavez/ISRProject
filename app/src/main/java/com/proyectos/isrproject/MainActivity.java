@@ -5,6 +5,8 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -52,6 +54,25 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         };
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.settings, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+
+            case R.id.menu_logout:
+                signOut();
+                break;
+
+        }
+
+        return true;
     }
 
     @Override
@@ -124,5 +145,9 @@ public class MainActivity extends AppCompatActivity {
     @OnClick(R.id.login_button)
     public void loginButton() {
         signIn(loginEmail.getText().toString(), loginPassword.getText().toString());
+    }
+
+    private void signOut() {
+        FirebaseAuth.getInstance().signOut();
     }
 }
