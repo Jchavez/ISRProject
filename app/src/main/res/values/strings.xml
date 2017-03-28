@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">ISRProject</string>
+    <string name="signed_in">Signed In</string>
+    <string name="signed_out">Signed Out</string>
 </resources>
