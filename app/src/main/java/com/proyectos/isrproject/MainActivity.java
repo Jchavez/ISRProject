@@ -1,12 +1,10 @@
 package com.proyectos.isrproject;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -17,10 +15,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
 
     @BindView(R.id.login_status) TextView loginStatus;
     @BindView(R.id.login_email) EditText loginEmail;
@@ -35,7 +32,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        ButterKnife.bind(this);
 
         mAuth = FirebaseAuth.getInstance();
         mAuthListener = new FirebaseAuth.AuthStateListener() {
@@ -45,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
                 if (user != null) {
                     // User is signed in
+                    startHomeActivity();
                     loginStatus.setText(R.string.signed_in);
                     Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
                 } else {
@@ -54,25 +51,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         };
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.settings, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-
-            case R.id.menu_logout:
-                signOut();
-                break;
-
-        }
-
-        return true;
     }
 
     @Override
@@ -95,7 +73,6 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
-        //showProgressDialog();
         mAuth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
 
@@ -110,12 +87,8 @@ public class MainActivity extends AppCompatActivity {
                         Log.w(TAG, "signInWithEmail:failed", task.getException());
                         /*Toast.makeText(EmailPasswordActivity.this, R.string.auth_failed,
                             Toast.LENGTH_SHORT).show();*/
-                    }
-
-                    if (!task.isSuccessful()) {
                         //mStatusTextView.setText(R.string.auth_failed);
                     }
-                    //hideProgressDialog();
                 }
             });
     }
@@ -147,7 +120,9 @@ public class MainActivity extends AppCompatActivity {
         signIn(loginEmail.getText().toString(), loginPassword.getText().toString());
     }
 
-    private void signOut() {
-        FirebaseAuth.getInstance().signOut();
+    private void startHomeActivity() {
+        Intent homeActivity = new Intent(MainActivity.this, HomeActivity.class);
+        finish();
+        startActivity(homeActivity);
     }
 }
