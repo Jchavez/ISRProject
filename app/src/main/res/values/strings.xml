@@ -2,6 +2,7 @@
     <string name="app_name">ISR Project</string>
     <string name="signed_in">Signed In</string>
     <string name="signed_out">Signed Out</string>
+
     <string name="login_email">Email</string>
     <string name="login_password">Password</string>
     <string name="login_button">Log in</string>
@@ -18,4 +19,16 @@
 
     <string name="action_settings">Settings</string>
     <string name="welcome">Welcome to ISR Project</string>
+
+    <string name="isr_nit_label">NIT</string>
+    <string name="isr_nit">79872348&#8211;1</string>
+    <string name="isr_name_label">Name</string>
+    <string name="isr_name">Evelin Arriaza</string>
+    <string name="isr_amount_label">Amount</string>
+    <string name="isr_amount">234324</string>
+    <string name="isr_percent_label">% IVA 5%</string>
+    <string name="isr_detained">ISR Detained:</string>
+    <string name="iva_detained">IVA Detained:</string>
+    <string name="isr_total">TOTAL</string>
+    <string name="isr_button">Calculate and Save</string>
 </resources>

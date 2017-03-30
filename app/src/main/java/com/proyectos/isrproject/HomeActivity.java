@@ -8,20 +8,31 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-public class HomeActivity extends AppCompatActivity
+import butterknife.BindView;
+import butterknife.OnClick;
+
+public class HomeActivity extends BaseActivity
     implements NavigationView.OnNavigationItemSelectedListener {
 
     TextView userEmail;
+
+    @BindView(R.id.isr_nit) EditText isrNit;
+    @BindView(R.id.isr_name) EditText isrName;
+    @BindView(R.id.isr_amount) EditText isrAmount;
+
+    @BindView(R.id.isr_detained_calculated) TextView isrDetained;
+    @BindView(R.id.iva_detained_calculated) TextView ivaDetained;
+    @BindView(R.id.isr_total_calculate) TextView isrTotal;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -125,5 +136,35 @@ public class HomeActivity extends AppCompatActivity
             String email = user.getEmail();
             userEmail.setText(email);
         }
+    }
+
+    @OnClick(R.id.calculate_save_button)
+    public void loginButton() {
+        String currency = "Q.";
+
+        int amount = Integer.parseInt(isrAmount.getText().toString());
+
+        String isrCalculated = currency + calculateISR(amount);
+        String ivaCalculated = currency + calculateIVA(amount);
+        String totalCalculated = currency + calculateTOTAL(amount);
+
+        isrDetained.setText(isrCalculated);
+        ivaDetained.setText(ivaCalculated);
+        isrTotal.setText(totalCalculated);
+    }
+
+    private String calculateISR(int amount) {
+        int amountCalculate = amount * 8;
+        return String.valueOf(amountCalculate);
+    }
+
+    private String calculateIVA(int amount) {
+        int amountCalculate = amount * 10;
+        return String.valueOf(amountCalculate);
+    }
+
+    private String calculateTOTAL(int amount) {
+        int amountCalculate = amount * 1000;
+        return String.valueOf(amountCalculate);
     }
 }
