@@ -5,7 +5,12 @@
     <string name="login_email">Email</string>
     <string name="login_password">Password</string>
     <string name="login_button">Log in</string>
+
     <string name="menu_logout">Logout</string>
+    <string name="menu_calculate">Calculate</string>
+    <string name="menu_history">History</string>
+    <string name="menu_share">Share</string>
+    <string name="menu_send">Send</string>
 
     <string name="title_activity_home">Home</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
