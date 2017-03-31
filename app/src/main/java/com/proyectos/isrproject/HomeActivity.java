@@ -1,5 +1,7 @@
 package com.proyectos.isrproject;
 
+import android.app.Fragment;
+import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -12,29 +14,19 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.proyectos.isrproject.service.QueryService;
-
-import butterknife.BindView;
-import butterknife.OnClick;
+import com.proyectos.isrproject.fragment.Calculate;
+import com.proyectos.isrproject.fragment.History;
 
 public class HomeActivity extends BaseActivity
     implements NavigationView.OnNavigationItemSelectedListener {
 
     TextView userEmail;
-    String uid;
-
-    @BindView(R.id.isr_nit) EditText isrNit;
-    @BindView(R.id.isr_name) EditText isrName;
-    @BindView(R.id.isr_amount) EditText isrAmount;
-
-    @BindView(R.id.isr_detained_calculated) TextView isrDetained;
-    @BindView(R.id.iva_detained_calculated) TextView ivaDetained;
-    @BindView(R.id.isr_total_calculate) TextView isrTotal;
+    Fragment fragment;
+    FragmentManager fragmentManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +58,10 @@ public class HomeActivity extends BaseActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         loadUserProfile();
+
+        fragmentManager = getFragmentManager();
+        fragment = new Calculate();
+        fragmentManager.beginTransaction().replace(R.id.fragment_container, fragment).commit();
     }
 
     @Override
@@ -106,11 +102,12 @@ public class HomeActivity extends BaseActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-
         if (id == R.id.nav_calculate) {
-
+            fragment = new Calculate();
+            fragmentManager.beginTransaction().replace(R.id.fragment_container, fragment).commit();
         } else if (id == R.id.nav_history) {
-
+            fragment = new History();
+            fragmentManager.beginTransaction().replace(R.id.fragment_container, fragment).commit();
         } else if (id == R.id.nav_share) {
 
         } else if (id == R.id.nav_send) {
@@ -136,57 +133,8 @@ public class HomeActivity extends BaseActivity
 
         if (user != null) {
             String emailLogged = user.getEmail();
-            uid = user.getUid();
             userEmail.setText(emailLogged);
         }
     }
 
-    @OnClick(R.id.calculate_save_button)
-    public void loginButton() {
-        String currency = "Q.";
-
-        int amount = Integer.parseInt(isrAmount.getText().toString());
-        int isrCalculated = calculateISR(amount);
-        int ivaCalculated = calculateIVA(amount);
-        int totalCalculated = calculateTOTAL(amount);
-
-        // Saving Data
-        saveData(amount, isrCalculated, ivaCalculated, totalCalculated);
-        //
-
-        String isrCalculatedText = currency + String.valueOf(isrCalculated);
-        String ivaCalculatedText = currency + String.valueOf(ivaCalculated);
-        String totalCalculatedText = currency + String.valueOf(totalCalculated);
-
-        isrDetained.setText(isrCalculatedText);
-        ivaDetained.setText(ivaCalculatedText);
-        isrTotal.setText(totalCalculatedText);
-    }
-
-    private int calculateISR(int amount) {
-        int amountCalculate = amount * 8;
-        amountCalculate += 5;
-        return amountCalculate;
-    }
-
-    private int calculateIVA(int amount) {
-        int amountCalculate = amount * 10;
-        amountCalculate += 8;
-        return amountCalculate;
-    }
-
-    private int calculateTOTAL(int amount) {
-        int amountCalculate = amount * 1000;
-        amountCalculate += 65;
-        return amountCalculate;
-    }
-
-    private void saveData(int amount, int isrCalculated, int ivaCalculated, int totalCalculated) {
-        String nit = isrNit.getText().toString();
-        String name = isrName.getText().toString();
-
-        QueryService queryService = new QueryService();
-        queryService.initDatabase();
-        queryService.writeNewQuery(uid, nit, name, amount, isrCalculated, ivaCalculated, totalCalculated);
-    }
 }
