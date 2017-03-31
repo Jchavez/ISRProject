@@ -26,6 +26,7 @@ public class HomeActivity extends BaseActivity
     implements NavigationView.OnNavigationItemSelectedListener {
 
     TextView userEmail;
+    String uid;
 
     @BindView(R.id.isr_nit) EditText isrNit;
     @BindView(R.id.isr_name) EditText isrName;
@@ -134,8 +135,9 @@ public class HomeActivity extends BaseActivity
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
         if (user != null) {
-            String email = user.getEmail();
-            userEmail.setText(email);
+            String emailLogged = user.getEmail();
+            uid = user.getUid();
+            userEmail.setText(emailLogged);
         }
     }
 
@@ -144,29 +146,39 @@ public class HomeActivity extends BaseActivity
         String currency = "Q.";
 
         int amount = Integer.parseInt(isrAmount.getText().toString());
+        int isrCalculated = calculateISR(amount);
+        int ivaCalculated = calculateIVA(amount);
+        int totalCalculated = calculateTOTAL(amount);
 
-        String isrCalculated = currency + calculateISR(amount);
-        String ivaCalculated = currency + calculateIVA(amount);
-        String totalCalculated = currency + calculateTOTAL(amount);
+        // Saving Data
+        saveData(amount, isrCalculated, ivaCalculated, totalCalculated);
+        //
 
-        isrDetained.setText(isrCalculated);
-        ivaDetained.setText(ivaCalculated);
-        isrTotal.setText(totalCalculated);
+        String isrCalculatedText = currency + String.valueOf(isrCalculated);
+        String ivaCalculatedText = currency + String.valueOf(ivaCalculated);
+        String totalCalculatedText = currency + String.valueOf(totalCalculated);
+
+        isrDetained.setText(isrCalculatedText);
+        ivaDetained.setText(ivaCalculatedText);
+        isrTotal.setText(totalCalculatedText);
     }
 
-    private String calculateISR(int amount) {
+    private int calculateISR(int amount) {
         int amountCalculate = amount * 8;
-        return String.valueOf(amountCalculate);
+        amountCalculate += 5;
+        return amountCalculate;
     }
 
-    private String calculateIVA(int amount) {
+    private int calculateIVA(int amount) {
         int amountCalculate = amount * 10;
-        return String.valueOf(amountCalculate);
+        amountCalculate += 8;
+        return amountCalculate;
     }
 
-    private String calculateTOTAL(int amount) {
+    private int calculateTOTAL(int amount) {
         int amountCalculate = amount * 1000;
-        return String.valueOf(amountCalculate);
+        amountCalculate += 65;
+        return amountCalculate;
     }
 
     private void saveData(int amount, int isrCalculated, int ivaCalculated, int totalCalculated) {
@@ -175,7 +187,6 @@ public class HomeActivity extends BaseActivity
 
         QueryService queryService = new QueryService();
         queryService.initDatabase();
-        queryService.writeNewQuery(nit, name, amount, isrCalculated, ivaCalculated, totalCalculated);
-
+        queryService.writeNewQuery(uid, nit, name, amount, isrCalculated, ivaCalculated, totalCalculated);
     }
 }

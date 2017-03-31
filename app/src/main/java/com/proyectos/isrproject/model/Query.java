@@ -1,5 +1,10 @@
 package com.proyectos.isrproject.model;
 
+import com.google.firebase.database.Exclude;
+
+import java.util.HashMap;
+import java.util.Map;
+
 public class Query {
 
     private String nit;
@@ -20,6 +25,19 @@ public class Query {
         this.isrDetained = isrDetained;
         this.ivaDetained = ivaDetained;
         this.total = total;
+    }
+
+    @Exclude
+    public Map<String, Object> toMap() {
+        HashMap<String, Object> result = new HashMap<>();
+        result.put("nit", nit);
+        result.put("name", name);
+        result.put("amount", amount);
+        result.put("isrDetained", isrDetained);
+        result.put("ivaDetained", ivaDetained);
+        result.put("total", total);
+
+        return result;
     }
 
     @Override
