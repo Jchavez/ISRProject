@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.proyectos.isrproject.service.QueryService;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -166,5 +167,15 @@ public class HomeActivity extends BaseActivity
     private String calculateTOTAL(int amount) {
         int amountCalculate = amount * 1000;
         return String.valueOf(amountCalculate);
+    }
+
+    private void saveData(int amount, int isrCalculated, int ivaCalculated, int totalCalculated) {
+        String nit = isrNit.getText().toString();
+        String name = isrName.getText().toString();
+
+        QueryService queryService = new QueryService();
+        queryService.initDatabase();
+        queryService.writeNewQuery(nit, name, amount, isrCalculated, ivaCalculated, totalCalculated);
+
     }
 }
