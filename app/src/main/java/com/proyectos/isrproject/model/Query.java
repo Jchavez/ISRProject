@@ -55,4 +55,60 @@ public class Query {
             ", date=" + date +
             '}';
     }
+
+    public String getNit() {
+        return nit;
+    }
+
+    public void setNit(String nit) {
+        this.nit = nit;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getAmount() {
+        return amount;
+    }
+
+    public void setAmount(int amount) {
+        this.amount = amount;
+    }
+
+    public int getIsrDetained() {
+        return isrDetained;
+    }
+
+    public void setIsrDetained(int isrDetained) {
+        this.isrDetained = isrDetained;
+    }
+
+    public int getIvaDetained() {
+        return ivaDetained;
+    }
+
+    public void setIvaDetained(int ivaDetained) {
+        this.ivaDetained = ivaDetained;
+    }
+
+    public int getTotal() {
+        return total;
+    }
+
+    public void setTotal(int total) {
+        this.total = total;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
 }
