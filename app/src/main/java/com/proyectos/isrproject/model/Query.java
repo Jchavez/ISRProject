@@ -13,18 +13,20 @@ public class Query {
     private int isrDetained;
     private int ivaDetained;
     private int total;
+    private String date;
 
     public Query() {
 
     }
 
-    public Query(String nit, String name, int amount, int isrDetained, int ivaDetained, int total) {
+    public Query(String nit, String name, int amount, int isrDetained, int ivaDetained, int total, String date) {
         this.nit = nit;
         this.name = name;
         this.amount = amount;
         this.isrDetained = isrDetained;
         this.ivaDetained = ivaDetained;
         this.total = total;
+        this.date = date;
     }
 
     @Exclude
@@ -36,6 +38,7 @@ public class Query {
         result.put("isrDetained", isrDetained);
         result.put("ivaDetained", ivaDetained);
         result.put("total", total);
+        result.put("date", date);
 
         return result;
     }
@@ -49,6 +52,7 @@ public class Query {
             ", isrDetained=" + isrDetained +
             ", ivaDetained=" + ivaDetained +
             ", total=" + total +
+            ", date=" + date +
             '}';
     }
 }
