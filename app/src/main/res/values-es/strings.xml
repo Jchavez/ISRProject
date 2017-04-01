@@ -1,0 +1,34 @@
+<resources>
+    <string name="app_name">Proyecto ISR</string>
+    <string name="signed_in">Loguearse</string>
+    <string name="signed_out">Desloguearse</string>
+
+    <string name="login_email">Correo Electronico</string>
+    <string name="login_password">Contraseña</string>
+    <string name="login_button">Iniciar Sesion</string>
+
+    <string name="menu_logout">Cerrar Sesion</string>
+    <string name="menu_calculate">Calcular</string>
+    <string name="menu_history">Historial</string>
+    <string name="menu_share">Compartir</string>
+    <string name="menu_send">Enviar</string>
+
+    <string name="title_activity_home">Inicio</string>
+    <string name="navigation_drawer_open">Abrir navegación drawer</string>
+    <string name="navigation_drawer_close">Cerrar navegación drawer</string>
+
+    <string name="action_settings">Configuracioón</string>
+    <string name="welcome">Bienvenido a Proyecto ISR</string>
+
+    <string name="isr_nit_label">NIT</string>
+    <string name="isr_nit">79872348&#8211;1</string>
+    <string name="isr_name_label">Nombre</string>
+    <string name="isr_name">Evelin Arriaza</string>
+    <string name="isr_amount_label">Cantidad</string>
+    <string name="isr_amount">234324</string>
+    <string name="isr_percent_label">% IVA 5%</string>
+    <string name="isr_detained">ISR Calculado:</string>
+    <string name="iva_detained">IVA Calculado:</string>
+    <string name="isr_total">TOTAL</string>
+    <string name="isr_button">Calcular and Guardar</string>
+</resources>
