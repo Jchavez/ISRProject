@@ -75,22 +75,28 @@ public class Calculate extends Fragment {
         isrTotal.setText(totalCalculatedText);
     }
 
+    private int getIsr(int amount) {
+        double personalExpenses = 48000;
+        double income = amount * 12;
+        double taxableIncome = income - personalExpenses;
+
+        double isr = taxableIncome * 0.05;
+
+        return (int) isr;
+    }
+
     private int calculateISR(int amount) {
-        int amountCalculate = amount * 8;
-        amountCalculate += 5;
-        return amountCalculate;
+        return ((int) getIsr(amount) / 12);
     }
 
     private int calculateIVA(int amount) {
-        int amountCalculate = amount * 10;
-        amountCalculate += 8;
-        return amountCalculate;
+        double iva = amount * 0.05;
+
+        return ((int) iva);
     }
 
     private int calculateTOTAL(int amount) {
-        int amountCalculate = amount * 1000;
-        amountCalculate += 65;
-        return amountCalculate;
+        return ((int) getIsr(amount));
     }
 
     private void saveData(int amount, int isrCalculated, int ivaCalculated, int totalCalculated) {
